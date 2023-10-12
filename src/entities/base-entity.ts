@@ -1,12 +1,9 @@
-import { createId } from '@paralleldrive/cuid2'
 import { z, ZodSchema } from 'zod'
 
+import { idSchema } from '@/value-objects/id'
+
 export const baseEntitySchema = z.object({
-  id: z
-    .string()
-    .cuid2()
-    .optional()
-    .transform((v) => (v ? v : createId())),
+  id: idSchema,
 })
 
 type baseEntityOut = z.output<typeof baseEntitySchema>
