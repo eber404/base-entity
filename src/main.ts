@@ -1,9 +1,11 @@
+import { faker } from '@faker-js/faker'
+
 import { User } from './user'
 
 const user = User.create({
-  name: 'John Doe',
-  birthday: new Date('1990-01-01'),
+  name: faker.person.fullName(),
+  birthday: faker.date.birthdate(),
+  email: faker.internet.email(),
 })
 
-console.log('user', user)
-console.log('age', user.getAge())
+console.log('user', { ...user, age: user.age })
