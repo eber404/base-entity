@@ -35,7 +35,7 @@ export class BaseEntity {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected static create(_props: unknown) {
+  protected static create(_props: unknown): unknown {
     throw Error('Method not implemented.')
   }
 }
