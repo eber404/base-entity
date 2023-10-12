@@ -1,9 +1,7 @@
-import { BaseEntity, BaseEntityProps } from './base-entity'
+import { BaseEntity } from './base-entity'
+import { PropsOnly } from './lib/props-only'
 
-interface UserProps extends BaseEntityProps {
-  readonly name: string
-  readonly birthday: Date
-}
+export type UserProps = PropsOnly<User>
 
 export class User extends BaseEntity {
   readonly name: string
@@ -16,7 +14,12 @@ export class User extends BaseEntity {
   }
 
   static create(props: UserProps) {
-    return this.buildEntity<UserProps, User>({ input: props, Entity: User })
+    const factory = (props: UserProps) => new User(props)
+
+    return this.buildEntity<User, UserProps>({
+      input: props,
+      factory,
+    })
   }
 
   public getAge() {

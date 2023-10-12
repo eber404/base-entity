@@ -1,13 +1,11 @@
-import { Newable } from './lib/newable'
+import { PropsOnly } from './lib/props-only'
 
-interface BuildEntityInput<I, E> {
-  input: I
-  Entity: Newable<E, I>
+interface BuildEntityInput<Input, T> {
+  input: Input
+  factory: (props: Input) => T
 }
 
-export interface BaseEntityProps {
-  readonly id: string
-}
+export type BaseEntityProps = PropsOnly<BaseEntity>
 
 export class BaseEntity {
   readonly id: string
@@ -16,10 +14,10 @@ export class BaseEntity {
     this.id = props.id
   }
 
-  protected static buildEntity<I, E>({
+  protected static buildEntity<T, I>({
     input,
-    Entity,
-  }: BuildEntityInput<I, E>): E {
-    return new Entity(input)
+    factory,
+  }: BuildEntityInput<I, T>): T {
+    return factory(input)
   }
 }
