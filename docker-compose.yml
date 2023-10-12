@@ -1,0 +1,39 @@
+services:
+  scraper:
+    container_name: f9-scraper-service
+    build: .
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - falsonove
+    volumes:
+      - .:/app
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: '256M'
+
+  postgres:
+    container_name: f9-scraper-postgres
+    image: postgres:13-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    networks:
+      - falsonove
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: '1G'
+
+networks:
+  falsonove:
+    driver: bridge
